@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    width:100vw;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    display: flex;
+    
+    overflow-x: hidden;
+    overflow-y: hidden;
+    justify-content: center;  
+    align-items: center;  
+    flex-direction: column;
+}
+
+h1{
+    font-size: 50px;
+}
+.c1{
+    
+ margin: 10px;
+  background-color: #000000;
+  width: 350px ;
+  height: 700px ;
+  text-align: center;
+  
+}
+/*.c2{
+    background-color: #454242;
+  padding: 10px;
+  height: 28%;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(179, 157, 157, 0.2);
+}*/
+
+.c2{
+  background-color: #000000;
+  
+  width: 250px;
+  height: 250px;
+  border-radius: 0px;
+  text-align: center;
+ 
+}
+
+.buttons{
+  margin-top: 30px;
+  margin-left: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+ row-gap: 10px;
+  column-gap: 10px;
+
+  
+}
+
+.buttons button{
+    background-color: #262424;
+ 
+  color: aliceblue;
+  border-radius: 50px;
+  height: 70px;
+  width: 70px;
+  font-size: 30px;
+  border: none;
+  transition: background-color 0.2s , transform 0.1s ease;
+}
+
+.buttons button:active{
+  background-color:rgb(112, 108, 108) ;
+  transform: scale(0.95);
+}
+
+.buttons button:nth-child(1),
+.buttons button:nth-child(2),
+.buttons button:nth-child(3),
+.buttons button:nth-child(4),
+.buttons button:nth-child(9),
+.buttons button:nth-child(14),
+.buttons button:nth-child(19),
+.buttons button:nth-child(24){
+  color: greenyellow;
+   background-color: #454444;
+   
+}
+
+.buttons button:nth-child(1){
+ color: rgb(247, 108, 108);
+}
+
+.buttons button:nth-child(23){
+  background-color: rgb(112, 180, 10);
+}
+
+.icon{
+  color: rgb(50, 78, 6);
+  margin-left:300px;
+  margin-top: 140px;
+  padding: 10px;
+  background-color: #000000;
+  border: none;
+  border-radius: 25px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.icon:active{
+  background-color:rgb(60, 57, 57) ;
+  transform: scale(0.95);
+}
+
+.line{
+  background-color: #605c5c;
+  border: none;
+  height: 1px;
+  width: 320px;
+  margin-left: 15px;
+  margin-top: 8px;
+}
+
+.input{
+    margin-left: 2px;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    border:none;
+    border-color: #000000;
+    width: 346px;
+    height: 50px;
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+
+
+  
+    </style>
+</head>
+<body>
+   
+    <br>
+    <div class="c1">
+    <div class="c2">
+        <input type="text" class="input">
+       <button class="icon"><i class="fa-solid fa-delete-left"></i></button>
+       <hr class="line">
+    </div>  
+    <div class="buttons">
+    <button>C</button>
+    <button>(</button>
+    <button>)</button>
+    <button>/</button><br>
+    <button>7</button>
+    <button>8</button>
+    <button>9</button>
+    <button>x</button><br>
+    <button>4</button>
+    <button>5</button>
+    <button>6</button>
+    <button>-</button><br>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>+</button><br>
+    <button>.</button>
+    <button>0</button>
+    <button><strong>=</strong></button>
+    <button>^</button>
+    </div>
+        
+    </div>
+</body>
+
+</html>
