@@ -5,8 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <script>
+    let balance=0;
+    const sample="/x-+^.";
+    const oparator="/x-+^("
+    let check=true;
+
+    function insert(element){
+      if(!/[0-9\/\^*\-+\.()]/.test(element))return;
+    let exp=document.getElementById('expression');
+    let temp=exp.value;
+    let lastchar=temp.slice(-1);
+
+    if(element==='.'){
+      if(exp.value===''||exp.value==='0'){
+        exp.value="0.";
+        check=false;
+        return;
+    }
+      if(check===true){
+        if(oparator.includes(lastchar)){
+          exp.value= exp.value+'0';
+        }
+        if(lastchar===')'){
+          exp.value= exp.value+'x0';
+        }
+      exp.value+='.';
+      check=false;
+      return;
+    }
+    else return;
+    
+    }
+
+   if(element==="**"){
+        element='^';
+    }
+   if(element==='*'){
+        element='x';
+    }
+    if(lastchar==='('){
+      if(element==='-'){
+      exp.value=exp.value+'-';
+      return;
+     }
+     if(sample.includes(element))return;
+    }
+
+     if(exp.value===''&&sample.includes(element)){
+      if(element==='-'){
+        exp.value+="(-";
+        balance++;
+      }
+      return;
+     }
+    
+    if(sample.includes(lastchar)&&sample.includes(element)){
+      let dupli=temp.slice(0,-1);
+      if(lastchar==='-'&&dupli.slice(-2)==='('){
+        undo();
+        return;
+      }
+      exp.value=temp.slice(0,-1)+element;
+      check=true;
+      return;
+    }
+
+     if(element==='('){
+      balance++;
+      if(isvalid(lastchar))exp.value=exp.value+'x';
+      if(lastchar==='.'){
+        undo();
+        return;
+      }
+    }
+
+    if(element===')'){
+      if(lastchar==='('||sample.includes(lastchar))return;
+      else if(balance===0)return;
+      else if(balance>0)balance--;
+  }
+
+  if(lastchar===')'&&/[0-9]/.test(element)){
+    exp.value=exp.value+'x';
+  }
+  if(!/[0-9]/.test(element))check=true;
+  exp.value=exp.value+element;
+}
+
+function isvalid(char){
+  if(char==='')return false;
+  else if((char>=0&&char<=9)||char===')')
+  return true;
+  else
+  return false;
+}
+
+function evalbutton(){
+     
+    let exp=document.getElementById('expression').value;
+     exp=exp.replace(/\^/g,"**");
+     exp=exp.replace(/x/g,'*');
+    try{
+        const output=eval(exp);
+         document.getElementById('result').innerText=output;
+    }
+    catch(e){
+         document.getElementById('result').innerText="invalid format used";
+    }
+}
+
+function clearinput(){
+  balance=0;
+  check=true
+    document.getElementById('expression').value='';
+    document.getElementById('result').innerText='';
+}
+
+
+function undo(){
+  let exp=document.getElementById('expression').value;
+  let temp=exp;
+  let lastchar=temp.slice(-1);
+  if(lastchar==='(')balance--;
+  if(lastchar==='.')check=true;
+  exp=exp.slice(0,-1);
+  document.getElementById('expression').value=exp;
+  document.getElementById('result').innerText='';
+}
+
+
+   </script>
+
     <style>
-        *{
+   *{
     padding: 0;
     margin: 0;
 }
@@ -19,7 +151,7 @@ body{
     display: flex;
     
     overflow-x: hidden;
-    overflow-y: hidden;
+    
     justify-content: center;  
     align-items: center;  
     flex-direction: column;
@@ -37,14 +169,7 @@ h1{
   text-align: center;
   
 }
-/*.c2{
-    background-color: #454242;
-  padding: 10px;
-  height: 28%;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(179, 157, 157, 0.2);
-}*/
+
 
 .c2{
   background-color: #000000;
@@ -57,7 +182,7 @@ h1{
 }
 
 .buttons{
-  margin-top: 30px;
+  margin-top: 25px;
   margin-left: 8px;
   display: flex;
   flex-wrap: wrap;
@@ -82,7 +207,7 @@ h1{
 }
 
 .buttons button:active{
-  background-color:rgb(112, 108, 108) ;
+  background-color:rgb(211, 202, 202) ;
   transform: scale(0.95);
 }
 
@@ -110,7 +235,7 @@ h1{
 .icon{
   color: rgb(50, 78, 6);
   margin-left:300px;
-  margin-top: 140px;
+  margin-top: 20px;
   padding: 10px;
   background-color: #000000;
   border: none;
@@ -128,56 +253,80 @@ h1{
   height: 1px;
   width: 320px;
   margin-left: 15px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .input{
     margin-left: 2px;
+    text-align: right;
     background-color: #000000;
     color: rgb(255, 255, 255);
     border:none;
     border-color: #000000;
     width: 346px;
-    height: 50px;
-    margin-top: 20px;
+    height: 100px;
+    color: rgb(255, 255, 255);
+    margin-top: 10px;
     font-size: 40px;
 }
 
-
+.output{
+  margin-top: 20px;
+   margin-left: 2px;
+    margin-left: 2px;
+     text-align: right;
+    
+    color: greenyellow(255, 255, 255);
+    border:none;
+    border-color: #000000;
+   margin-left: 2px;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    border:none;
+    border-color: #000000;
+  width: 346px;
+  height: 50px;
+  font-size:40px ;
+}
 
   
     </style>
 </head>
 <body>
+  
    
     <br>
     <div class="c1">
     <div class="c2">
-        <input type="text" class="input">
-       <button class="icon"><i class="fa-solid fa-delete-left"></i></button>
+     
+        <input type="text" class="input" id="expression" placeholder="|">
+        <p class="output" id="result"></p>
+    
+       
+      <button class="icon" onclick="undo()"><i class="fa-solid fa-delete-left"></i></button>
        <hr class="line">
     </div>  
     <div class="buttons">
-    <button>C</button>
-    <button>(</button>
-    <button>)</button>
-    <button>/</button><br>
-    <button>7</button>
-    <button>8</button>
-    <button>9</button>
-    <button>x</button><br>
-    <button>4</button>
-    <button>5</button>
-    <button>6</button>
-    <button>-</button><br>
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>+</button><br>
-    <button>.</button>
-    <button>0</button>
-    <button><strong>=</strong></button>
-    <button>^</button>
+    <button onclick="clearinput()">C</button>
+    <button onclick="insert('(')">(</button>
+    <button onclick="insert(')')">)</button>
+    <button onclick="insert('/')">/</button><br>
+    <button onclick="insert('7')">7</button>
+    <button onclick="insert('8')">8</button>
+    <button onclick="insert('9')">9</button>
+    <button onclick="insert('*')">x</button><br>
+    <button onclick="insert('4')">4</button>
+    <button onclick="insert('5')">5</button>
+    <button onclick="insert('6')">6</button>
+    <button onclick="insert('-')">-</button><br>
+    <button onclick="insert('1')">1</button>
+    <button onclick="insert('2')">2</button>
+    <button onclick="insert('3')">3</button>
+    <button onclick="insert('+')">+</button><br>
+    <button onclick="insert('.')">.</button>
+    <button onclick="insert('0')">0</button>
+    <button onclick="evalbutton()">=</button>
+    <button onclick="insert('**')">^</button>
     </div>
         
     </div>
