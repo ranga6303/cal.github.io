@@ -5,140 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-   <script>
-    let balance=0;
-    const sample="/x-+^.";
-    const oparator="/x-+^("
-    let check=true;
-
-    function insert(element){
-      if(!/[0-9\/\^*\-+\.()]/.test(element))return;
-    let exp=document.getElementById('expression');
-    let temp=exp.value;
-    let lastchar=temp.slice(-1);
-
-    if(element==='.'){
-      if(exp.value===''||exp.value==='0'){
-        exp.value="0.";
-        check=false;
-        return;
-    }
-      if(check===true){
-        if(oparator.includes(lastchar)){
-          exp.value= exp.value+'0';
-        }
-        if(lastchar===')'){
-          exp.value= exp.value+'x0';
-        }
-      exp.value+='.';
-      check=false;
-      return;
-    }
-    else return;
-    
-    }
-
-   if(element==="**"){
-        element='^';
-    }
-   if(element==='*'){
-        element='x';
-    }
-    if(lastchar==='('){
-      if(element==='-'){
-      exp.value=exp.value+'-';
-      return;
-     }
-     if(sample.includes(element))return;
-    }
-
-     if(exp.value===''&&sample.includes(element)){
-      if(element==='-'){
-        exp.value+="(-";
-        balance++;
-      }
-      return;
-     }
-    
-    if(sample.includes(lastchar)&&sample.includes(element)){
-      let dupli=temp.slice(0,-1);
-      if(lastchar==='-'&&dupli.slice(-2)==='('){
-        undo();
-        return;
-      }
-      exp.value=temp.slice(0,-1)+element;
-      check=true;
-      return;
-    }
-
-     if(element==='('){
-      balance++;
-      if(isvalid(lastchar))exp.value=exp.value+'x';
-      if(lastchar==='.'){
-        undo();
-        return;
-      }
-    }
-
-    if(element===')'){
-      if(lastchar==='('||sample.includes(lastchar))return;
-      else if(balance===0)return;
-      else if(balance>0)balance--;
-  }
-
-  if(lastchar===')'&&/[0-9]/.test(element)){
-    exp.value=exp.value+'x';
-  }
-  if(!/[0-9]/.test(element))check=true;
-  exp.value=exp.value+element;
-}
-
-function isvalid(char){
-  if(char==='')return false;
-  else if((char>=0&&char<=9)||char===')')
-  return true;
-  else
-  return false;
-}
-
-function evalbutton(){
-     
-    let exp=document.getElementById('expression').value;
-     exp=exp.replace(/\^/g,"**");
-     exp=exp.replace(/x/g,'*');
-    try{
-        const output=eval(exp);
-         document.getElementById('result').innerText=output;
-    }
-    catch(e){
-         document.getElementById('result').innerText="invalid format used";
-    }
-}
-
-function clearinput(){
-  balance=0;
-  check=true
-    document.getElementById('expression').value='';
-    document.getElementById('result').innerText='';
-}
-
-
-function undo(){
-  let exp=document.getElementById('expression').value;
-  let temp=exp;
-  let lastchar=temp.slice(-1);
-  if(lastchar==='(')balance--;
-  if(lastchar==='.')check=true;
-  exp=exp.slice(0,-1);
-  document.getElementById('expression').value=exp;
-  document.getElementById('result').innerText='';
-}
-
-
-   </script>
-
-    <style>
-   *{
+   <style>
+  *{
     padding: 0;
     margin: 0;
 }
@@ -268,6 +136,8 @@ h1{
     color: rgb(255, 255, 255);
     margin-top: 10px;
     font-size: 40px;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .output{
@@ -276,19 +146,17 @@ h1{
     margin-left: 2px;
      text-align: right;
     
-    color: greenyellow(255, 255, 255);
-    border:none;
-    border-color: #000000;
+    color:greenyellow;
+    
    margin-left: 2px;
     background-color: #000000;
-    color: rgb(255, 255, 255);
+    
     border:none;
     border-color: #000000;
   width: 346px;
   height: 50px;
-  font-size:40px ;
+  font-size:30px ;
 }
-
   
     </style>
 </head>
@@ -331,5 +199,178 @@ h1{
         
     </div>
 </body>
+<script>
+    let balance=0;
+    const sample="/x-+^.";
+    const oparator="/x-+^("
+    let check=true;
 
+    function insert(element){
+      if(!/[0-9\/\^*\-+\.()]/.test(element))return;
+    let exp=document.getElementById('expression');
+    let temp=exp.value;
+    let lastchar=temp.slice(-1);
+    
+    if(['/','*','+',"**",'(','-'].includes(element)&&temp.slice(-2)==="(-"){
+      if(element==='('){
+        balance++;
+        undo();
+        exp.value=exp.value+element;
+        return;
+      }
+      return;
+    }
+
+    if(element==='.'){
+      if(exp.value===''||exp.value==='0'){
+        exp.value="0.";
+        check=false;
+        return;
+    }
+      if(check===true){
+        if(oparator.includes(lastchar)){
+          exp.value= exp.value+'0';
+        }
+        if(lastchar===')'){
+          exp.value= exp.value+'x0';
+        }
+      exp.value+='.';
+      check=false;
+      return;
+    }
+    else return;
+    
+    }
+
+   if(element==="**"){
+        element='^';
+    }
+   if(element==='*'){
+        element='x';
+    }
+    if(lastchar==='('){
+      if(element==='-'){
+      exp.value=exp.value+'-';
+      return;
+     }
+     if(sample.includes(element))return;
+    }
+
+     if(exp.value===''&&sample.includes(element)){
+      if(element==='-'){
+        exp.value+="(-";
+        balance++;
+      }
+      return;
+     }
+    
+    if(sample.includes(lastchar)&&sample.includes(element)){
+      let dupli=temp.slice(0,-1);
+      if(lastchar==='-'&&dupli.slice(-2)==='('){
+        undo();
+        return;
+      }
+      exp.value=temp.slice(0,-1)+element;
+      check=true;
+      return;
+    }
+
+     if(element==='('){
+      balance++;
+      if(isvalid(lastchar))exp.value=exp.value+'x';
+      if(lastchar==='.'){
+        undo();
+        return;
+      }
+    }
+
+    if(element===')'){
+      if(lastchar==='('||sample.includes(lastchar))return;
+      else if(balance===0)return;
+      else if(balance>0)balance--;
+  }
+
+  if(lastchar===')'&&/[0-9]/.test(element)){
+    exp.value=exp.value+'x';
+  }
+  if(!/[0-9]/.test(element))check=true;
+  exp.value=exp.value+element;
+  middleval();
+}
+
+function isvalid(char){
+  if(char==='')return false;
+  else if((char>=0&&char<=9)||char===')')
+  return true;
+  else
+  return false;
+}
+
+function evalbutton(){
+     
+    let exp=document.getElementById('expression');
+     exp.value=exp.value.replace(/\^/g,"**");
+     exp.value=exp.value.replace(/x/g,'*');
+     if(exp.value==='')return;
+    try{
+        const output=eval(exp.value);
+        exp.value=output;
+        document.getElementById('result').innerText = '';
+    }
+    catch(e){
+         document.getElementById('result').innerText="invalid format used";
+    }
+}
+
+function middleval(){
+     
+    let exp=document.getElementById('expression').value;
+     exp=exp.replace(/\^/g,"**");
+     exp=exp.replace(/x/g,'*');
+     if(exp==='')return;
+    try{
+        const output=eval(exp);
+         document.getElementById('result').innerText=output;
+    }
+    catch(e){
+         document.getElementById('result').innerText="";
+    }
+}
+
+function clearinput(){
+  balance=0;
+  check=true
+    document.getElementById('expression').value='';
+    document.getElementById('result').innerText='';
+}
+
+
+function undo(){
+  let exp=document.getElementById('expression').value;
+  let temp=exp;
+  let lastchar=temp.slice(-1);
+  if(lastchar==='(')balance--;
+  if(lastchar===')')balance++;
+  if(lastchar==='.')check=true;
+  exp=exp.slice(0,-1);
+  document.getElementById('expression').value=exp;
+  document.getElementById('result').innerText='';
+  middleval();
+}
+
+const input = document.getElementById('expression');
+
+function forceScrollRight() {
+  // Ensure the input is focused
+  input.focus();
+  // Move the scroll to the rightmost
+  input.scrollLeft = input.scrollWidth;
+}
+
+
+input.addEventListener('input', forceScrollRight);
+
+   </script>
+
+    
 </html>
