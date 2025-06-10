@@ -359,14 +359,9 @@ function undo(){
 }
 
 const input = document.getElementById('expression');
-
 function forceScrollRight() {
-  // Ensure the input is focused
-  input.focus();
-  // Move the scroll to the rightmost
   input.scrollLeft = input.scrollWidth;
 }
-
 
 input.addEventListener('input', forceScrollRight);
 
